@@ -3,3 +3,4 @@
     "package_name": "yourapplication",
     "model_name": "the model name",
     "controller_name": "{{ cookiecutter.model_name.lower()|replace(' ', '_')|replace('-', '_') }}"
+}
