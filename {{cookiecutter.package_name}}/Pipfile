@@ -8,13 +8,7 @@ name = "pypi"
 [packages]
 
 flask = "*"
-flask-bcrypt = "*"
-flask-bootstrap = "*"
-flask-login = "*"
-flask-migrate = "*"
-flask-sqlalchemy = "*"
-flask-wtf = "*"
-psycopg2 = "*"
+flask-restful= "*"
 
 
 [dev-packages]

@@ -1,92 +1,11 @@
-# manage.py
+from flask import Flask
+from flask_restful import Resource, Api
+from app.main.controller import {{cookiecutter.model_name}}_controller
 
+app = Flask(__name__)
+api = Api(app)
 
-import unittest
+api.add_resource({{cookiecutter.model_name}}_controller, '/')
 
-import coverage
-
-from flask.cli import FlaskGroup
-
-from app.server import create_app, db
-from app.server.models import User
-import subprocess
-import sys
-
-app = create_app()
-cli = FlaskGroup(create_app=create_app)
-
-# code coverage
-COV = coverage.coverage(
-    branch=True,
-    include="app/*",
-    omit=[
-        "app/tests/*",
-        "app/server/config.py",
-        "app/server/*/__init__.py",
-    ],
-)
-COV.start()
-
-
-@cli.command()
-def create_db():
-    db.drop_all()
-    db.create_all()
-    db.session.commit()
-
-
-@cli.command()
-def drop_db():
-    """Drops the db tables."""
-    db.drop_all()
-
-
-@cli.command()
-def create_admin():
-    """Creates the admin user."""
-    db.session.add(User(email="ad@min.com", password="admin", admin=True))
-    db.session.commit()
-
-
-@cli.command()
-def create_data():
-    """Creates sample data."""
-    pass
-
-
-@cli.command()
-def test():
-    """Runs the unit tests without test coverage."""
-    tests = unittest.TestLoader().discover("app/tests", pattern="test*.py")
-    result = unittest.TextTestRunner(verbosity=2).run(tests)
-    if result.wasSuccessful():
-        sys.exit(0)
-    else:
-        sys.exit(1)
-
-
-@cli.command()
-def cov():
-    """Runs the unit tests with coverage."""
-    tests = unittest.TestLoader().discover("app/tests")
-    result = unittest.TextTestRunner(verbosity=2).run(tests)
-    if result.wasSuccessful():
-        COV.stop()
-        COV.save()
-        print("Coverage Summary:")
-        COV.report()
-        COV.html_report()
-        COV.erase()
-        sys.exit(0)
-    else:
-        sys.exit(1)
-
-
-@cli.command()
-def flake():
-    """Runs flake8 on the app."""
-    subprocess.run(["flake8", "app"])
-
-
-if __name__ == "__main__":
-    cli()
+if __name__ == '__main__':
+    app.run(debug=True)
