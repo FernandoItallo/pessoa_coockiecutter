@@ -1,5 +1,5 @@
 {
     "app_name": "Flask Skeleton",
     "package_name": "yourapplication",
-    "controller_name": "Controller name"
+    "model_name": "my model"
 }
